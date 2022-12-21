@@ -1505,6 +1505,7 @@ int set_disambiguate_hint_config(const char *var, const char *value);
  * input, so it is safe to pass this function an arbitrary
  * null-terminated string.
  */
+/** /** SHA-1 会产生 160 位二进制数, 可以转为40位十六进制数*/
 int get_sha1_hex(const char *hex, unsigned char *sha1);
 int get_oid_hex(const char *hex, struct object_id *sha1);
 
