@@ -1242,6 +1242,7 @@ static int show_all(void)
 	struct string_list list = STRING_LIST_INIT_DUP;
 	int result;
 
+	/** list 中有origin */
 	result = for_each_remote(get_one_entry, &list);
 
 	if (!result) {

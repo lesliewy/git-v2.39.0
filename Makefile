@@ -1349,7 +1349,8 @@ endif
 # tweaked by config.* below as well as the command-line, both of
 # which'll override these defaults.
 # Older versions of GCC may require adding "-std=gnu99" at the end.
-CFLAGS = -g -O2 -Wall
+#CFLAGS = -g -O2 -Wall
+CFLAGS = -g -O0 -Wall
 LDFLAGS =
 CC_LD_DYNPATH = -Wl,-rpath,
 BASIC_CFLAGS = -I.

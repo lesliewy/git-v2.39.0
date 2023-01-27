@@ -7,6 +7,8 @@
 #include "shallow.h"
 
 /**
+ * common-main.c main() -> git.c cmd_main() -> handle_builtin() -> run_builtin() -> fn(即commands的第二个字段, 一般是 cmd_xxx, 如 cmd_remote, cmd_rebase.
+ *
  * git.c:
  *   commands: git 所有builtin子命令.
  */
@@ -467,6 +469,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
 	trace2_cmd_list_env_vars();
 
 	validate_cache_entries(the_repository->index);
+	/** fn 就是 commands 中第二个字段. */
 	status = p->fn(argc, argv, prefix);
 	validate_cache_entries(the_repository->index);
 
@@ -877,8 +880,10 @@ int cmd_main(int argc, const char **argv)
 	if (!cmd)
 		cmd = "git-help";
 	else {
+		/** 找到最后带slash, 比如 cmd=/home/leslie/github/git/git-remote, slash则为/git-remote*/
 		const char *slash = find_last_dir_sep(cmd);
 		if (slash)
+			/** 去除slash, 结果cmd为 git-remote */
 			cmd = slash + 1;
 	}
 
@@ -894,6 +899,7 @@ int cmd_main(int argc, const char **argv)
 	 * So we just directly call the builtin handler, and die if
 	 * that one cannot handle it.
 	 */
+	/** 去除prefix后是否仍为命令. cmd为remote. 进入此分支后，最终会exit. */
 	if (skip_prefix(cmd, "git-", &cmd)) {
 		argv[0] = cmd;
 		handle_builtin(argc, argv);
