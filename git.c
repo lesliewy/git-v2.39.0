@@ -6,6 +6,10 @@
 #include "alias.h"
 #include "shallow.h"
 
+/**
+ * git.c:
+ *   commands: git 所有builtin子命令.
+ */
 #define RUN_SETUP		(1<<0)
 #define RUN_SETUP_GENTLY	(1<<1)
 #define USE_PAGER		(1<<2)
@@ -19,9 +23,9 @@
 #define NO_PARSEOPT		(1<<6) /* parse-options is not used */
 
 struct cmd_struct {
-	const char *cmd;
-	int (*fn)(int, const char **, const char *);
-	unsigned int option;
+	const char *cmd;                              /** 命令名称 */
+	int (*fn)(int, const char **, const char *);  /** 具体执行函数 */
+	unsigned int option;                          /** 执行option */
 };
 
 const char git_usage_string[] =
@@ -486,6 +490,9 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
 	return 0;
 }
 
+/**
+ * 第一个字段是子命令的名称，第二个字段是具体执行函数。get_builtin 函数根据名称找到结构，然后run_builtin执行结构里的命令。
+ */
 static struct cmd_struct commands[] = {
 	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
 	{ "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
